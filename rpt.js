@@ -176,7 +176,7 @@ function printLog() {
 
 
 ////
-// add snoopsnoo link to the RES user mouse over div
+// add RedditMetis link to the RES user mouse over div
 
 // event triggered by elements being loaded into the page
 $(document).on('DOMNodeInserted', function(e) {
@@ -207,10 +207,10 @@ function addToRESHover(elem) {
     let body = elem.parentNode.childNodes[5].childNodes[0];
     // let zIndex = elem.parentNode.style.zIndex;
 
-    // add SnoopSnoo link
+    // add RedditMetis link
     let snoopSnooLink = document.createElement('a');
-    snoopSnooLink.href = 'https://snoopsnoo.com/u/' + user;
-    snoopSnooLink.textContent = 'SnoopSnoo';
+    snoopSnooLink.href = 'https://redditmetis.com/user/' + user;
+	snoopSnooLink.textContent = 'RedditMetis';
 
     title.style.whiteSpace = 'nowrap';
     title.style.fontSize = 'smaller';
@@ -259,7 +259,7 @@ function addSnoopSnooTag() {
     children[(children.length - 1)].remove();
     last.style.marginLeft = '3px';
 
-    let snoopSnoo = $('<span/>').addClass('snoopSnoo').append('(', $('<a/>').attr('href', 'https://snoopsnoo.com/u/' + user).text('SnoopSnoo'), ')');
+    let snoopSnoo = $('<span/>').addClass('snoopSnoo').append('(', $('<a/>').attr('href', 'https://redditmetis.com/user/' + user).text('RedditMetis'), ')');
     let rptPos = users[user].tagSpan('rptStats', 'RPT+');
     let rptNeg = users[user].tagSpan('rptStats', 'RPT-');
 
