@@ -20,11 +20,6 @@ let usersWorking = false;
 let domainsWorking = false;
 
 
-// add google analytics
-ga('create', 'UA-124046785-1', 'auto');
-ga('send', 'pageview');
-
-
 
 $(document).ready(function() {
     getSettings();
@@ -367,8 +362,6 @@ function addPatreonLink() {
     // return;
     // }
 
-    // add analytics for Patreon Ad show
-    ga('send', 'event', 'Patreon Ad', 'show');
 
     let patreonDiv = $('<div>').css({
         'margin-top': topMargin + 'px',
@@ -431,10 +424,8 @@ function addPatreonLink() {
 
     patreonBtn.mousedown(function(e) {
         if (e.which == 1) {
-            ga('send', 'event', 'Patreon Ad', 'click');
             window.location = patreonUrl;
         } else if (e.which == 2) {
-            ga('send', 'event', 'Patreon Ad', 'click');
             window.open(patreonUrl, '_blank');
         }
     });
