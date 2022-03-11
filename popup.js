@@ -456,6 +456,7 @@ function basicSettings() {
 	trs.push(tableRow([settingsLabel('Enabled'), tableData(checkbox(settings[selected.section][selected.type][selected.tag].enabled))]));
 	trs.push(tableRow([settingsLabel('Tag Color'), tableData([textBox('color', settings[selected.section][selected.type][selected.tag].color), colorDisp('color', settings[selected.section][selected.type][selected.tag].color)])]));
 	trs.push(tableRow([settingsLabel('Text Color'), tableData([textBox('tcolor', settings[selected.section][selected.type][selected.tag].tcolor), colorDisp('tcolor', settings[selected.section][selected.type][selected.tag].tcolor)])]));
+	trs.push(tableRow([settingsLabel("Fork Tools"), tableData([button("Check Banned", checkbanned)])]));
 	
 	return trs;
 }
@@ -476,9 +477,9 @@ function settingsLabel(label) {
 	return $('<td/>').addClass('settingsLabel').css('white-space', 'nowrap').text(label + ':')
 }
 
-
-
-
+function button(text, callback) {
+	return $('<button/>').addClass('settingsInput').text(text).click(callback);
+}
 
 function checkbox(checked, id = 'enabled') {
 	let input = $('<input/>').addClass('settingsInput checkbox').attr({type: 'checkbox', id: id}).prop('checked', checked);
@@ -550,10 +551,61 @@ function selectBox(id, value) {
 	return select;
 }
 
+let banned = []
+let quarantined = []
+let privated = []
 
+function checkbanned() {
+	let list = settings[selected.section][selected.type][selected.tag].list;
 
+	banned = [];
+	quarantined = [];
+	privated = [];
 
+	list.forEach(item => {
+		console.log("Checking", item)
+		const url = `https://www.reddit.com/r/${item}.json`;
 
+		$.ajax({
+			type: 'GET',
+			url: url,
+			dataType: 'json',
+        }).fail(function(xhr) {
+            var json = xhr.responseJSON;
+
+            if (!json.reason) {
+                console.log('ajax failed:', url);
+                return;
+            }
+
+            switch (json.reason) {
+                case "banned": {
+                    banned.push(item);
+                    break
+                }
+                
+                case "quarantined": {
+                    quarantined.push(item);
+                    break
+                }
+                
+                case "private": {
+                    privated.push(item);
+                    break
+                }
+
+                default: {
+                    console.log('ajax failed:', url);
+                }
+            }
+
+            console.log("Checked", item)
+            drawMain();
+            drawMenu();
+        })
+	});
+
+}
 
 function settingsListTr(label) {
 	let btn = addDeleteBtn('add', 'blue', 7).attr({type: selected.type, tag: selected.tag});
@@ -651,7 +703,17 @@ function settingsList() {
 			itemText = $('<a/>').attr('href', 'http://' + item).text(item);
 		}
 		
-		let div = $('<div/>').addClass('listItem').append([btn, itemText]);
+		let status = $("<span/>");
+
+		if (banned.includes(item)) {
+			status = status.addClass("status-banned").text("banned")
+		} else if (quarantined.includes(item)) {
+			status = status.addClass("status-quarantined").text("quarantined")
+		} else if (privated.includes(item)) {
+			status = status.addClass("status-privated").text("privated")
+		}
+
+		let div = $('<div/>').addClass('listItem').append([btn, itemText, status]);
 		divs.push(div);
 	});
 	

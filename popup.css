@@ -1,8 +1,17 @@
+.status-privated {
+    color: #555555;
+	margin-left: 1rem;
+}
 
+.status-quarantined {
+    color: #999900;
+	margin-left: 1rem;
+}
 
-
-
-
+.status-banned {
+    color: #880000;
+	margin-left: 1rem;
+}
 
 div {
 	/* border-style: 	solid; */

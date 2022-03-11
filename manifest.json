@@ -18,7 +18,7 @@
     "js": ["jquery-3.4.1.min.js", "chrome-extension-async.js", "rpt.js", "settings.js", "users.js", "db.js", "domains.js"],
     "matches": ["https://*.reddit.com/*"]
   }],
-  "permissions": ["storage"],
+  "permissions": ["storage", "https://*.reddit.com/*"],
   "icons": {
 	"16": "images/rpt-16.png",
 	"48": "images/rpt-48.png",
