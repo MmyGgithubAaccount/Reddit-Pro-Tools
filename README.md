@@ -1,1 +1,1 @@
-Reddit Pro Tools
+Reddit Pro Tools with modifications from https://codeberg.org/corn/Reddit-Pro-Tools, https://redd.it/pkysl6, and me
