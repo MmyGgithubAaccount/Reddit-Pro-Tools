@@ -173,6 +173,7 @@ function User(username, init = true) {
         this.stats.subreddits = {};
         this.comments.forEach((comment) => {
             if (comment !== null) {
+                comment.subreddit = comment.subreddit.toLowerCase();
                 if (!this.stats.subreddits[comment.subreddit]) {
                     this.stats.subreddits[comment.subreddit] = new SubStats;
                 }

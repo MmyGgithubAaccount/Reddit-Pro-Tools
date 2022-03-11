@@ -581,7 +581,9 @@ function settingsListTr(label) {
 					if (selected.type == 'domains') {
 						item = item.replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/\/.*/, '').toLowerCase();
 					}
-					
+					if (selected.type == "subreddits") {
+						item = item.toLowerCase();
+					}
 					if (!settings[selected.section][selected.type][selected.tag].list.includes(item)) { 
 						settings[selected.section][selected.type][selected.tag].list.push(item);
 						
