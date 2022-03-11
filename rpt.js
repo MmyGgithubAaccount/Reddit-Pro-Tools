@@ -288,7 +288,7 @@ function addRemovedditLink() {
     let img = chrome.extension.getURL('images/removeddit.png');
     let url = window.location.href.split('/');
 
-    url[2] = 'www.removeddit.com';
+    url[2] = 'www.reveddit.com';
     url = url.join('/');
     $('#header-bottom-right').append('<span class="separator">|</span><a href="' + url + '"><img class="removeddit" src="' + img + '"></a>');
 }
