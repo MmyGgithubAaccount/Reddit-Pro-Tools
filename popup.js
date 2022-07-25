@@ -299,9 +299,29 @@ function drawMenu() {
 			});
 		});
 	});
+
+	let backupDiv = $("<div/>")
+    .attr("id", "undoDiv")
+    .css("cursor", "pointer")
+    .text("Backup and Restore");
+
+  backupDiv.click(function (e) {
+    const loaded = prompt(
+      "COPY the following text to SAVE your backup.\nPASTE your existing text to the following box to LOAD your backup.",
+      JSON.stringify(settings)
+    );
+
+    if (loaded.trim().length <= 0) {
+      return;
+    }
+
+    settings = JSON.parse(loaded);
+    saveSettings();
+    location.reload();
+  });
 	
 	// let undoResetDiv = $('<div/>').addClass('menuReset').append([advancedDiv, undoDiv, resetDiv]);
-	let undoResetDiv = $('<div/>').addClass('menuReset').append([undoDiv, resetDiv]);
+	let undoResetDiv = $('<div/>').addClass('menuReset').append([undoDiv, resetDiv, backupDiv]);
 	$('.menuFrame').append(undoResetDiv);
 	
 	if (settingsEqual(startSettings)) {
