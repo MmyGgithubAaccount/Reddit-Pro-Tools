@@ -96,7 +96,7 @@ function User(username, init = true) {
 
     this.getCommentsJson = async function(type = 'after', id = null) {
         let domain = window.location.hostname;
-        let url = 'https://' + domain + '/user/' + this.name + '/comments.json?sort=new&limit=100';
+        let url = 'https://' + domain + '/user/' + this.name + '/overview.json?sort=new&limit=100'; // overview loads both posts and comments, and the data structures are the same
 
         if (id) {
             url += '&' + type + '=' + id;
@@ -135,7 +135,7 @@ function User(username, init = true) {
                 name: comment.data.name,
                 created: comment.data.created_utc,
                 subreddit: comment.data.subreddit,
-                controversiality: comment.data.controversiality,
+                controversiality: comment.data.controversiality || 0,
                 score: comment.data.score,
             };
 
