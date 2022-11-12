@@ -24,7 +24,7 @@ let domainsWorking = false;
 $(document).ready(function() {
     getSettings();
 
-    addRemovedditLink();
+    addPostRestorerLink();
     addPatreonLink();
 
     // give the settings and the db a extra blink of time to load
@@ -202,19 +202,21 @@ function addToRESHover(elem) {
         return;
     }
 
-    let user = elem.childNodes[0].textContent.match(/\/u\/(.*)/)[1];
+    let user = elem.childNodes[0].textContent.match(/\/u\/(.*)/)?.[1];
     let title = elem.childNodes[0];
     let body = elem.parentNode.childNodes[5].childNodes[0];
     // let zIndex = elem.parentNode.style.zIndex;
 
-    // add RedditMetis link
-    let snoopSnooLink = document.createElement('a');
-    snoopSnooLink.href = 'https://redditmetis.com/user/' + user;
-	snoopSnooLink.textContent = 'RedditMetis';
+    // add SnoopSnoo link
+    if (user) {
+        let snoopSnooLink = document.createElement('a');
+        snoopSnooLink.href = 'https://redditmetis.com/user/' + user;
+        snoopSnooLink.textContent = 'RedditMetis';
 
-    title.style.whiteSpace = 'nowrap';
-    title.style.fontSize = 'smaller';
-    title.childNodes[6].after('(', snoopSnooLink, ')');
+	title.style.whiteSpace = 'nowrap';
+        title.style.fontSize = 'smaller';
+        title.childNodes[6].after('(', snoopSnooLink, ')');
+    }
 
     // add RPT Stats
     let fieldPair = document.createElement('div');
@@ -227,8 +229,8 @@ function addToRESHover(elem) {
     let fieldPairText = document.createElement('div');
     fieldPairText.className = 'fieldPair-text';
 
-    let rptPos = users[user].tagSpan('rptStats', 'RPT+');
-    let rptNeg = users[user].tagSpan('rptStats', 'RPT-');
+    let rptPos = users[user]?.tagSpan('rptStats', 'RPT+');
+    let rptNeg = users[user]?.tagSpan('rptStats', 'RPT-');
 
     fieldPairText.append(rptPos, rptNeg);
     fieldPair.append(fieldPairLabel, fieldPairText);
@@ -284,13 +286,14 @@ function addSnoopSnooTag() {
 // $('#header-bottom-right').append('<span class="separator">|</span><a href="' + url + '"><img class="ceddit" src="' + img + '"></a>');
 // }
 
-function addRemovedditLink() {
-    let img = chrome.extension.getURL('images/removeddit.png');
+function addPostRestorerLink() {
+    let img = chrome.runtime.getURL('images/post-restorer-icon.png');
     let url = window.location.href.split('/');
+ //   let top = `calc(2px + ${ $('#header-bottom-right #mail').css('top') })`;
 
     url[2] = 'www.reveddit.com';
     url = url.join('/');
-    $('#header-bottom-right').append('<span class="separator">|</span><a href="' + url + '"><img class="removeddit" src="' + img + '"></a>');
+    $('#header-bottom-right').append(`<span class="separator">|</span><a href="${url}" title="View deleted comments" class="post-restorer" style="background-image: url('${img}')"></a>`);
 }
 
 
